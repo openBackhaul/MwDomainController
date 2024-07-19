@@ -1,8 +1,4 @@
-# o1controller
-OpenDaylight based SDN Controller, which is used in the ONAP and the TSI project.
+# Controller
+Documentation for the OpenDaylight based SDN Controller as it is used in the mobile backhaul network at Telefonica Germany.
 
-### [1.0.0-tsi.d.t](../../tree/tsi)
-- Controller version as it is used in the Transport SDN Introduction project at Telefonica Germany.
 
-### Comments
-./.

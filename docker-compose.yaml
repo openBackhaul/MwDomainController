@@ -8,9 +8,9 @@ services:
       - "8181:8181"
     environment:
       - JAVA_OPTS=-Xms512m -Xmx1024m -XX:+UseG1GC -XX:MaxGCPauseMillis=120
-    # uncomment volumes section to stores logs in host folder /var/tmp/sdnr/logs
+    # uncomment volumes section to stores logs in host folder /var/tmp/mwdomaincontroller/logs
     #volumes:
-      #- /var/tmp/sdnr/logs:/opt/opendaylight/data/log
+      #- /var/tmp/mwdomaincontroller/logs:/opt/opendaylight/data/log
     logging:
       driver:   "json-file"
       options:

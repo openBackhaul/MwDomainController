@@ -12,7 +12,7 @@ Clone the controller repo from Openbackhaul site
 > cd MwDomainController
 
 Planned ODL conatainer Respository and Version name to be updated in docker-compose.yaml file as shared and highlighted in below snippet
-###### Sample snippet:
+###### _Sample snippet_:
 <br>
 <img src="imageupdate.JPG">
 <br>
@@ -22,14 +22,16 @@ Create and start the container from downloaded docker image.
 > docker-compose up -d 
 
 Image will be installed in the VM and sample snippet shared below <br>
-###### Sample snippet:
+###### _Sample snippet_:
 <br>
 <img src="dockerimages.JPG">
 <br>
-### Credential:
+
+### Credential: 
+
 Default ODL credential: <br>
-username:admin<br>
-password:admin<br>
+**username**:admin<br>
+**password**:admin<br>
 
 ### Adding device into Controller:
 Using below sample template user can add the device into controller.<br>

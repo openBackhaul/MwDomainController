@@ -21,15 +21,15 @@ Planned ODL conatainer Respository and Version name to be updated in docker-comp
 Create and start the container from downloaded docker image.
 > docker-compose up -d 
 
-##### To Stop the ODL controller:
-> docker-compose down
-
 Image will be installed in the VM and sample snippet shared below <br>
 ###### Sample snippet:
 <br>
 <img src="dockerimages.JPG">
 <br>
-
+### Credential:
+Default ODL credential: <br>
+username:admin<br>
+password:admin<br>
 
 ### Adding device into Controller:
 Using below sample template user can add the device into controller.<br>
@@ -67,11 +67,13 @@ Body:
 }
 ```
 ### Deleting device from Controller:
-
-##### Deleting device from ODL using REST request:
+If user need to delete the device from ODL controller, below request to be used 
 url:
 > http://{ODL-IP}:8181/rests/data/network-topology:network-topology/topology=topology-netconf/node={nodename}
 
 Operation:
 > DELETE
 
+##### To Stop the ODL controller:
+If user trying to stop the ODL controller, below command to be used 
+> docker-compose down

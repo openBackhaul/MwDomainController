@@ -82,8 +82,9 @@ Body:
 ```
 
 ### Deleting device from Controller
-If user need to delete the device from SDN controller, below request to be used 
-url:
+If user need to delete the device from SDN controller, below request to be used
+
+URL:
 > http://{SDN-CONTROLLER-IP}:8181/rests/data/network-topology:network-topology/topology=topology-netconf/node={nodename}
 
 Operation:

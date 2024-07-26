@@ -1,12 +1,16 @@
 # MW Domain Controller
 Documentation for the OpenDaylight based SDN Controller as it is used in the mobile backhaul network at Telefonica Germany.
 
-
 ## Installation
 
 ### Minimal resources
 
-VM: CPU-2CORES, RAM-8G, Hard disk-100GB
+VM: CPU-2CORES, RAM-8G, Hard disk-100GB<br>
+OS: NAME="Red Hat Enterprise Linux", VERSION="8.9 (Ootpa)"
+
+### Proxy
+
+Enable proxy setting to reach internet for accessing [Docker](https://hub.docker.com/) and [Openbackhaul](https://github.com/openBackhaul)
 
 ### Docker
 

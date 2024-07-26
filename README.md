@@ -2,98 +2,96 @@
 Documentation for the OpenDaylight based SDN Controller as it is used in the mobile backhaul network at Telefonica Germany.
 
 
-_to be updated:_
+## Installation
 
+### Minimal resources
 
-Installation and usage
-----------------------
-
-## Prerequisites
+VM: CPU-2CORES, RAM-8G, Hard disk-100GB
 
 ### Docker
 
-Docker needs to be installed on the host machine where the SDN-R will be deployed. More information on installing Docker [here](https://docs.docker.com/get-docker/).
-
-Summary for Ubuntu installation:
-
-```bash
-sudo apt-get update
-
-sudo apt-get install \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg-agent \
-    software-properties-common
-
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-
-sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   $(lsb_release -cs) \
-   stable"
-
-sudo apt-get update
-
-sudo apt-get install docker-ce docker-ce-cli containerd.io
-```
+Docker needs to be installed on the host machine where the SDN Controller will be deployed. More information on installing Docker [here](https://docs.docker.com/get-docker/).
 
 ### Docker-compose
 
-Docker-compose is required on the host machine where the SDN-R will run. More information on installing docker-compose [here](https://docs.docker.com/compose/install/).
+Docker-compose is required on the host machine where the SDN Controller run. More information on installing docker-compose [here](https://docs.docker.com/compose/install/).
 
-Summary for Ubuntu installation:
-
-```bash
-sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
-sudo chmod +x /usr/local/bin/docker-compose
-```
-
-## Installation
-
-From the base folder:
-
-```bash
-docker-compose build
-```
-
-This will create a new Docker image containing the SDN-R. It can be verified with:
-
-```bash
-└─ $ ▶ docker images | grep onap-sdnr
-onap-sdnr                                            0.8.1                   5a9bf59c02c8        19 hours ago        918MB
-
-```
+### Clone repository
+Clone the controller repo from Openbackhaul site
+> git clone https://github.com/openBackhaul/MwDomainController.git <br>
+> cd MwDomainController
 
 ## Usage
 
-### Configuration
+### Pre-requisite
+1. Start mediator application
+2. Start Mediator instance manager and create device instance from vendor LAB  
 
-The folder **deploy/sdnr-config** contains AAA and Netconf Topology configurations that can be pre-loaded into SDN-R. Both types of configuration use *.csv files to describe data to be loaded. Please use the provided files as examples and do not alter the csv columns description if you want to use them.
+### Start the SDN controller
+Create and start the container from downloaded docker image:
+> docker-compose up -d 
 
-### Starting
+Image will be installed in the VM and sample snippet shared below:<br>
+<br>
+<img src="dockerimages.JPG">
+<br>
 
-SDN-R will have by default *admin/admin* as credentials. Before starting, the user has the responsibility of setting **ODL_USERNAME** and **ODL_PASSWORD** as environment variables on the host machine, containing the credentials. Example for Ubuntu machine:
+### Credentials
 
-```bash
-export ODL_USERNAME=admin
-export ODL_PASSWORD=admin
+Use default SDN controller credentials as Basic auth in all REST requests:<br>
+**username**: admin<br>
+**password**: admin<br>
+
+### Adding device into Controller
+Using below sample template user can add the device into controller.<br>
+
+nodename        - Unique device name to be added<br>
+mediatror_IP	- Mediator IP address<br>
+netconf_port	- Port which is assigned by Mediator instance manager (NETCONF server) <br>
+username     	- Username to be used for accessing the device<br>
+password    	- Password to be used for accessing the device<br>
+
+URL:
+> http://{SDN-CONTROLLER-IP}:8181/rests/data/network-topology:network-topology/topology=topology-netconf/node={nodename}
+
+Operation:
+> PUT
+
+Headers (Basic auth with admin:admin):
+> Authorization: Basic YWRtaW46YWRtaW4=
+
+Body:
+```
+{
+    "network-topology:node": [
+        {
+            "node-id": "<<nodename>>",
+            "netconf-node-topology:sleep-factor": "1",
+            "netconf-node-topology:max-connection-attempts": 8,
+            "netconf-node-topology:username": "<<username>>",
+            "netconf-node-topology:password": "<<password>>",
+            "netconf-node-topology:port": <<netconf_port>>,
+            "netconf-node-topology:host": "<<mediatror_IP>>",
+            "netconf-node-optional:notification": {
+                "subscribe": true,
+                "stream-name": "NETCONF"
+            }
+        }
+    ]
+}
 ```
 
-Then, from the base folder:
+### Deleting device from Controller
+If user need to delete the device from SDN controller, below request to be used 
+url:
+> http://{SDN-CONTROLLER-IP}:8181/rests/data/network-topology:network-topology/topology=topology-netconf/node={nodename}
 
-```bash
-cd deploy
+Operation:
+> DELETE
 
-docker-compose up -d
-```
+Headers (Basic auth with admin:admin):
+> Authorization: Basic YWRtaW46YWRtaW4=
 
-This will start an SDN-R instance in the background. It can be verified with:
-
-```bash
-└─ $ ▶ docker ps
-CONTAINER ID        IMAGE                                                COMMAND                  CREATED             STATUS              PORTS                                                                               NAMES
-d8a35b708406        onap-sdnr:0.8.1                                      "/opt/opendaylight/s…"   6 seconds ago       Up 5 seconds        0.0.0.0:8181->8181/tcp                                                              sdnr
-
-```
+### Stop the SDN controller
+If user trying to stop the SDN controller, below command to be used:
+> docker-compose down

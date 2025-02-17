@@ -8,9 +8,15 @@ services:
       - "8181:8181"
     environment:
       - JAVA_OPTS=-Xms512m -Xmx4096m -XX:+UseG1GC -XX:MaxGCPauseMillis=120
+      - odl-snapshots:${ODL_HOME}/snapshots
+      - odl-segmented-journal:${ODL_HOME}/segmented-journal
+      - odl-cache:${ODL_HOME}/cache
     # uncomment volumes section to stores logs in host folder /var/tmp/mwdomaincontroller/logs
-    #volumes:
+volumes:
       #- /var/tmp/mwdomaincontroller/logs:/opt/opendaylight/data/log
+    odl-snapshots:
+    odl-segmented-journal:
+    odl-cache:
     logging:
       driver:   "json-file"
       options:

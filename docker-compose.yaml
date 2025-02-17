@@ -12,13 +12,14 @@ services:
       - odl-segmented-journal:${ODL_HOME}/segmented-journal
       - odl-cache:${ODL_HOME}/cache
     # uncomment volumes section to stores logs in host folder /var/tmp/mwdomaincontroller/logs
-volumes:
-      #- /var/tmp/mwdomaincontroller/logs:/opt/opendaylight/data/log
-    odl-snapshots:
-    odl-segmented-journal:
-    odl-cache:
     logging:
       driver:   "json-file"
       options:
         max-size: "30m"
         max-file: "5"
+
+volumes:
+      #- /var/tmp/mwdomaincontroller/logs:/opt/opendaylight/data/log
+    odl-snapshots:
+    odl-segmented-journal:
+    odl-cache:

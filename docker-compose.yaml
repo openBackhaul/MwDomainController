@@ -2,7 +2,7 @@ version: "3.3"
 
 services:
   sdnr:
-    image: openbackhaul/mwdomaincontroller:v5.0.6-SR19
+    image: openbackhaul/mwdomaincontroller:v5.0.6-SR20
     container_name: sdnr
     ports:
       - "8181:8181"
